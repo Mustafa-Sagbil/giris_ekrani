@@ -21,3 +21,11 @@ class BilgiIconAction {
     print("Bilgilendirme");
   }
 }
+
+class GirisYapAction {
+  void girisYapAction(mail, sifre) {
+    print("Mail Adresi  Sifre");
+    print(mail);
+    print(sifre);
+  }
+}
