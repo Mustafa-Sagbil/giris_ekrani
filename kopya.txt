@@ -1,0 +1,27 @@
+Padding(
+      
+      
+
+      child: Stack(
+        
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/arkaPlanSagbilTeknoloji.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Center(
+            
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: "E-Posta",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
