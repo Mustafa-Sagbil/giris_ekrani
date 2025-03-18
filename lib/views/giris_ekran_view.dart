@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kullanici_girisi/actions/icon_actions.dart';
+import 'package:kullanici_girisi/actions/firebase.dart';
 
 class BilgiGirisi extends StatefulWidget {
   const BilgiGirisi({super.key});
@@ -9,17 +9,37 @@ class BilgiGirisi extends StatefulWidget {
 }
 
 class _BilgiGirisiState extends State<BilgiGirisi> {
-  final mailGirisi = TextEditingController();
+  final TextEditingController _sifreController = TextEditingController();
+  final TextEditingController _mailController = TextEditingController();
+  bool _sifreGor = false;
 
-  final sifreGirisi = TextEditingController();
-
-  var _sifreGor;
+  void girisYapAction(mail, sifre) {
+    FirebaseAction().login(mail, sifre);
+    _mailController.clear();
+    _sifreController.clear();
+  }
 
   @override
   void initState() {
     super.initState();
-
+    _mailController.addListener(_mailDinle);
+    _sifreController.addListener(_sifreDinle);
     _sifreGor = true;
+  }
+
+  void _mailDinle() {
+    setState(() {});
+  }
+
+  void _sifreDinle() {
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _mailController.clear();
+    _sifreController.clear();
   }
 
   @override
@@ -29,9 +49,11 @@ class _BilgiGirisiState extends State<BilgiGirisi> {
         Image.asset("assets/images/arkaPlanSagbilTeknoloji.png", scale: 1.2),
         Padding(
           padding: EdgeInsets.all(10),
-          child: TextField(
-            controller: mailGirisi,
+          child: TextFormField(
+            controller: _mailController,
+
             decoration: InputDecoration(
+              floatingLabelAlignment: FloatingLabelAlignment.center,
               labelText: "E Posta",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -41,8 +63,9 @@ class _BilgiGirisiState extends State<BilgiGirisi> {
         ),
         Padding(
           padding: EdgeInsets.all(10),
-          child: TextField(
-            controller: sifreGirisi,
+          child: TextFormField(
+            controller: _sifreController,
+
             obscureText: _sifreGor,
             decoration: InputDecoration(
               fillColor: Colors.amberAccent,
@@ -60,7 +83,7 @@ class _BilgiGirisiState extends State<BilgiGirisi> {
 
           child: ElevatedButton(
             onPressed: () {
-              GirisYapAction().girisYapAction(mailGirisi, sifreGirisi);
+              girisYapAction(_mailController.text, _sifreController.text);
             },
             style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Colors.deepPurpleAccent),
@@ -76,6 +99,10 @@ class _BilgiGirisiState extends State<BilgiGirisi> {
               ),
             ),
           ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 50, top: 30, right: 50),
+          child: Text("Buraya İstediğiniz Bilgiyi Yazabilirsiniz"),
         ),
       ],
     );
